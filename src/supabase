@@ -1,0 +1,24 @@
+'use client'
+
+import { createBrowserClient } from '@supabase/ssr'
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+export function getSupabase(): SupabaseClient | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!url || !anon) {
+    console.warn('Supabase credentials not found. Please check your environment variables.')
+    return null
+  }
+  
+  return createBrowserClient(url, anon)
+}
+
+// Type definitions for the waitlist table
+export interface WaitlistEntry {
+  id: string
+  email: string
+  created_at: string
+  updated_at: string
+}
