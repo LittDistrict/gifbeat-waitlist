@@ -4,18 +4,18 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-// Sample cinematic GIFs for the demo strip
-const demoGifs = [
-  { src: '/gifs/demo-1.gif', alt: 'Cinematic moment 1' },
-  { src: '/gifs/demo-2.gif', alt: 'Cinematic moment 2' },
-  { src: '/gifs/demo-3.gif', alt: 'Cinematic moment 3' },
-  { src: '/gifs/demo-4.gif', alt: 'Cinematic moment 4' },
-  { src: '/gifs/demo-5.gif', alt: 'Cinematic moment 5' },
-  { src: '/gifs/demo-6.gif', alt: 'Cinematic moment 6' },
-  { src: '/gifs/demo-7.gif', alt: 'Cinematic moment 7' },
-  { src: '/gifs/demo-8.gif', alt: 'Cinematic moment 8' },
-  { src: '/gifs/demo-9.gif', alt: 'Cinematic moment 9' },
-  { src: '/gifs/demo-10.gif', alt: 'Cinematic moment 10' },
+// Cinematic demo placeholders - no actual GIFs needed
+const demoItems = [
+  { id: 1, emoji: '🎬', title: 'Cinematic Moment 1' },
+  { id: 2, emoji: '✨', title: 'Cinematic Moment 2' },
+  { id: 3, emoji: '🎭', title: 'Cinematic Moment 3' },
+  { id: 4, emoji: '🌟', title: 'Cinematic Moment 4' },
+  { id: 5, emoji: '🎪', title: 'Cinematic Moment 5' },
+  { id: 6, emoji: '🎨', title: 'Cinematic Moment 6' },
+  { id: 7, emoji: '🎵', title: 'Cinematic Moment 7' },
+  { id: 8, emoji: '🎯', title: 'Cinematic Moment 8' },
+  { id: 9, emoji: '🎪', title: 'Cinematic Moment 9' },
+  { id: 10, emoji: '🎭', title: 'Cinematic Moment 10' },
 ]
 
 export default function DemoStrip() {
@@ -32,29 +32,26 @@ export default function DemoStrip() {
         <div className="relative h-64 overflow-hidden">
           <motion.div
             className="flex space-x-6"
-            animate={{ x: [0, -100 * demoGifs.length] }}
+            animate={{ x: [0, -100 * demoItems.length] }}
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           >
-            {/* Duplicate the GIFs for seamless loop */}
-            {[...demoGifs, ...demoGifs].map((gif, index) => (
+            {/* Duplicate the demo items for seamless loop */}
+            {[...demoItems, ...demoItems].map((item, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 w-80 h-64 rounded-lg overflow-hidden shadow-2xl"
               >
                 <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
-                  {/* Placeholder for missing GIFs */}
+                  {/* Beautiful animated placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-purple-500/20 animate-pulse" />
-                  <div className="text-4xl opacity-50">🎬</div>
-                  
-                  {/* Actual GIF would go here */}
-                  <img
-                    src={gif.src}
-                    alt={gif.alt}
-                    className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-300"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                    }}
-                  />
+                  <div className="text-6xl opacity-80 hover:opacity-100 transition-opacity duration-300">
+                    {item.emoji}
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 text-center">
+                    <p className="text-white text-sm font-medium opacity-70">
+                      {item.title}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
