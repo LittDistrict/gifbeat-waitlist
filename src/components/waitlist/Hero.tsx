@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface FloatingGif {
   id: number
@@ -17,15 +18,15 @@ export default function WaitlistHero() {
   const [floatingGifs, setFloatingGifs] = useState<FloatingGif[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Sample cinematic GIFs for floating effect
-  const sampleGifs = [
+  // Sample cinematic GIFs for floating effect - memoized to prevent re-renders
+  const sampleGifs = useMemo(() => [
     '/gifs/cinematic-1.gif',
     '/gifs/cinematic-2.gif',
     '/gifs/cinematic-3.gif',
     '/gifs/cinematic-4.gif',
     '/gifs/cinematic-5.gif',
     '/gifs/cinematic-6.gif',
-  ]
+  ], [])
 
   useEffect(() => {
     // Initialize floating GIFs
@@ -89,9 +90,11 @@ export default function WaitlistHero() {
           }}
         >
           <div className="w-full h-full rounded-lg overflow-hidden shadow-2xl">
-            <img 
+            <Image 
               src={gif.src} 
               alt="Cinematic GIF" 
+              width={gif.size}
+              height={gif.size}
               className="w-full h-full object-cover"
               onError={(e) => {
                 // Fallback to a placeholder if GIF doesn't exist
