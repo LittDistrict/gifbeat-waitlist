@@ -1,0 +1,174 @@
+# GifBeat Waitlist
+
+A cinematic waitlist landing page for GifBeat - where GIFs come alive with emotion and storytelling.
+
+## Features
+
+- 🎬 **Cinematic Design**: Black, white, charcoal, and accent yellow brand palette
+- ✨ **Interactive Animations**: Floating GIFs that transform through narrative steps
+- 📱 **Mobile First**: Responsive design with 60fps-safe transforms
+- ♿ **Accessibility**: Reduced motion support and proper focus states
+- 🚀 **Performance**: Lazy-loaded GIFs with poster fallbacks
+- 📧 **Email Collection**: Supabase integration with toast notifications
+- 🎯 **Smooth Scrolling**: Intersection Observer for step transitions
+
+## Tech Stack
+
+- **Next.js 15** (App Router)
+- **React 18** with TypeScript
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations
+- **Supabase** for email collection
+- **Vercel** for deployment
+
+## Quick Start
+
+### 1. Install Dependencies
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 2. Environment Setup
+
+Copy the example environment file:
+
+\`\`\`bash
+cp env.example .env.local
+\`\`\`
+
+Update `.env.local` with your Supabase credentials:
+
+\`\`\`env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+\`\`\`
+
+### 3. Supabase Database Setup
+
+Create a table called `waitlist_emails` in your Supabase project:
+
+\`\`\`sql
+CREATE TABLE waitlist_emails (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable Row Level Security
+ALTER TABLE waitlist_emails ENABLE ROW LEVEL SECURITY;
+
+-- Create policy for public inserts
+CREATE POLICY "Allow public waitlist signup" ON waitlist_emails
+FOR INSERT TO public
+WITH CHECK (true);
+\`\`\`
+
+### 4. Run Development Server
+
+\`\`\`bash
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) to see the waitlist.
+
+## Project Structure
+
+\`\`\`
+gifbeat-waitlist/
+├── app/
+│   ├── globals.css          # Global styles and Tailwind
+│   ├── layout.tsx           # Root layout with metadata
+│   └── page.tsx             # Main landing page
+├── components/
+│   ├── Header.tsx           # Logo and "Try it out" button
+│   ├── FloatingTiles.tsx    # Six GIF background layer
+│   ├── StepScenes.tsx       # Step 1/2/3 narrative sections
+│   ├── WaitlistForm.tsx     # Email collection with Supabase
+│   └── Footer.tsx           # Social links and copyright
+├── lib/
+│   └── supabaseClient.ts    # Supabase configuration
+├── public/
+│   ├── hero-1.gif          # Background GIF 1
+│   ├── hero-2.gif          # Background GIF 2
+│   ├── hero-3.gif          # Background GIF 3
+│   ├── hero-4.gif          # Background GIF 4
+│   ├── hero-5.gif          # Background GIF 5
+│   └── hero-6.gif          # Background GIF 6
+└── README.md
+\`\`\`
+
+## Customization
+
+### Replacing GIFs
+
+1. Replace the files in `/public/` with your own GIFs
+2. Keep the naming convention: `hero-1.gif`, `hero-2.gif`, etc.
+3. Optimize file sizes (2-3MB max per GIF for Vercel)
+4. Consider creating poster images for lazy loading
+
+### Brand Colors
+
+Update colors in `tailwind.config.ts`:
+
+\`\`\`typescript
+theme: {
+  extend: {
+    colors: {
+      accent: 'rgb(239,207,80)',  // Your accent color
+      charcoal: '#111',           // Your charcoal color
+    },
+  },
+}
+\`\`\`
+
+### Content Updates
+
+Edit the copy directly in the component files:
+- Hero text: `app/page.tsx`
+- Step descriptions: `components/StepScenes.tsx`
+- Waitlist copy: `components/WaitlistForm.tsx`
+- Footer links: `components/Footer.tsx`
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Deploy!
+
+### Manual Deployment
+
+\`\`\`bash
+npm run build
+npm start
+\`\`\`
+
+## Performance Tips
+
+- **GIF Optimization**: Keep individual GIFs under 3MB
+- **Lazy Loading**: GIFs load only when needed
+- **Reduced Motion**: Respects user accessibility preferences
+- **Mobile First**: Optimized for mobile performance
+
+## Browser Support
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## License
+
+© 2025 GifBeat Studios. All rights reserved.
+
+## Support
+
+For questions or issues:
+- Email: gifbeatstudios@gmail.com
+- Instagram: [@thegifbeat](https://instagram.com/thegifbeat)
+- TikTok: [@gifbeat.com](https://www.tiktok.com/@gifbeat.com)
